@@ -55,12 +55,12 @@ def robotStatusDecode(robotStatus):
     else:
         return("unknown")
 
-def robotSizeDecode(robotSize):
-    if robotSize == 1:
+def robotCoilSizeDecode(robotCoilSize):
+    if robotCoilSize == 1:
         return("big")
-    elif robotSize == 2:
+    elif robotCoilSize == 2:
         return("med")
-    elif robotSize == 3:
+    elif robotCoilSize == 3:
         return("small")
     else:
         return("none")
@@ -74,8 +74,8 @@ def robotInfo(debugStatus):
         #robot1 = 
         #robot2 = 
         #robot3 = 
-        robot1_status = "Robot 1: " + robotStatusDecode(robot1) + ", " + robotSizeDecode(robot1)
-        robot2_status = "Robot 2: " + robotStatusDecode(robot2) + ", " + robotSizeDecode(robot2)
-        robot3_status = "Robot 3: " + robotStatusDecode(robot3) + ", " + robotSizeDecode(robot3)
+        robot1_status = "Robot 1: " + robotStatusDecode(robot1) + ", " + robotCoilSizeDecode(robot1)
+        robot2_status = "Robot 2: " + robotStatusDecode(robot2) + ", " + robotCoilSizeDecode(robot2)
+        robot3_status = "Robot 3: " + robotStatusDecode(robot3) + ", " + robotCoilSizeDecode(robot3)
 
         VisionEngine.disptext(robot1_status, robot2_status, robot3_status, " ", 0, 0, 0, 0, 0, 12, 24, 36, debugStatus, '0')
