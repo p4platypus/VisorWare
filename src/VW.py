@@ -149,11 +149,11 @@ else:
     cfgfile.close()
 
 # Core Variable Initialization ######################################
-MenuItem1 = 0  # AcoustiVisor
-MenuItem2 = 0  # Settings.
-MenuItem3 = 0  # Power.
-MenuItem4 = 0  # Weather App.
-MenuItem5 = 0  # Clock Screen.
+MenuItem1 = 0  # Settings
+MenuItem2 = 0  # Power
+MenuItem3 = 0  # Robot Info
+MenuItem4 = 0  # Machine Info
+MenuItem5 = 0  # AcoustiVisor
 MenuItem6 = 0  # BLANK AND UNUSED
 
 debugStatus = True
@@ -184,6 +184,8 @@ time.sleep(3)
 # CORE APPLICATION IMPORTS:
 import vwapps.common.VWSet as VWSet
 import vwapps.pkgs.VWWeather as VWWeather
+import vwapps.pkgs.VWRobotInfo as VWRobotInfo
+import vwapps.pkgs.VWMachineInfo as VWMachineInfo
 #import vwapps.pkgs.VWClck as VWClck
 ###################################
 
@@ -456,7 +458,21 @@ def AcoustiVisor(): # Core Application function for the Speech-to-ASL Demo app.
     print("[ACOUSTIVISOR] : Quitting App and returning to the main menu.")
     VisionEngine.appExit(LanguageSet, debugStatus)
     time.sleep(0.5)
+    
+def APPRobotInfo():
+    VWRobotInfo.robotInfo(debugStatus)
+    
+    print('[ROBOT_INFO] : Exiting Robot Info and returning to the main menu.')
+    VisionEngine.appExit(LanguageSet, debugStatus)
+    time.sleep(0.5)
 
+def APPMachineInfo():
+    VWMachineInfo.machineInfo(debugStatus)
+    
+    print('[MACHINE_INFO] : Exiting Machine Info and returning to the main menu.')
+    VisionEngine.appExit(LanguageSet, debugStatus)
+    time.sleep(0.5)
+    
 #####################################################################
 
 print("[INTERFACE] : Main Menu is live.")
@@ -470,12 +486,15 @@ while True:
             VisionEngine.render("img/"+LanguageSet+"/Power.ppm", debugStatus)        
 
         elif MenuItem3 == 1:
-            VisionEngine.render("img/"+LanguageSet+"/Weather.ppm", debugStatus)
-
+            VisionEngine.render("img/"+LanguageSet+"/RobotInfo.ppm", debugStatus)
+        
         elif MenuItem4 == 1:
-            VisionEngine.render("img/"+LanguageSet+"/Acoustivisor.ppm", debugStatus)
+            VisionEngine.render("img/"+LanguageSet+"/MachineInfo.ppm", debugStatus)
 
         elif MenuItem5 == 1:
+            VisionEngine.render("img/"+LanguageSet+"/Acoustivisor.ppm", debugStatus)
+
+        elif MenuItem6 == 1:
             print('How did you get here lmao')
 
         if GPIO.input(screenb) == False:
@@ -484,25 +503,35 @@ while True:
         if GPIO.input(leftb) == False:
             print('[INTERFACE] : Button-Press --> LEFT')
             if MenuItem1 == 1:
-                MenuItem4 = 1
+                MenuItem5 = 1
+                MenuItem4 = 0
                 MenuItem3 = 0
                 MenuItem2 = 0
                 MenuItem1 = 0            
             elif MenuItem2 == 1:
                 MenuItem1 = 1
-                MenuItem3 = 0
+                MenuItem5 = 0
                 MenuItem4 = 0
+                MenuItem3 = 0
                 MenuItem2 = 0            
             elif MenuItem3 == 1:
                 MenuItem2 = 1
                 MenuItem1 = 0
+                MenuItem5 = 0
                 MenuItem4 = 0
                 MenuItem3 = 0            
             elif MenuItem4 == 1:
                 MenuItem3 = 1
                 MenuItem2 = 0
                 MenuItem1 = 0
+                MenuItem5 = 0
                 MenuItem4 = 0
+            elif MenuItem5 == 1:
+                MenuItem4 = 1
+                MenuItem3 = 0
+                MenuItem2 = 0
+                MenuItem1 = 0
+                MenuItem5 = 0
             time.sleep(ButtonPressDelay)
 
         elif GPIO.input(rightb) == False:
@@ -511,22 +540,32 @@ while True:
                 MenuItem2 = 1
                 MenuItem3 = 0
                 MenuItem4 = 0
+                MenuItem5 = 0
                 MenuItem1 = 0
             elif MenuItem2 == 1:
                 MenuItem3 = 1
-                MenuItem1 = 0
                 MenuItem4 = 0
+                MenuItem5 = 0
+                MenuItem1 = 0
                 MenuItem2 = 0
             elif MenuItem3 == 1:
                 MenuItem4 = 1
+                MenuItem5 = 0
                 MenuItem1 = 0
                 MenuItem2 = 0
                 MenuItem3 = 0
             elif MenuItem4 == 1:
+                MenuItem5 = 1
+                MenuItem1 = 0
+                MenuItem2 = 0
+                MenuItem3 = 0
+                MenuItem4 = 0
+            elif MenuItem5 == 1:
                 MenuItem1 = 1
                 MenuItem2 = 0
                 MenuItem3 = 0
                 MenuItem4 = 0
+                MenuItem5 = 0
             time.sleep(ButtonPressDelay)
 
         elif GPIO.input(homeb) == False:
@@ -536,12 +575,6 @@ while True:
                 VisionEngine.appStart(LanguageSet, debugStatus)
                 time.sleep(0.5)
                 APPSettings()
-                
-            elif MenuItem4 == 1:
-                print(Base.WARNING, "[INTERFACE] : Starting AcoustiVisor Demo App.", Base.END)
-                VisionEngine.appStart(LanguageSet, debugStatus)
-                time.sleep(0.5)  
-                AcoustiVisor()
 
             elif MenuItem2 == 1:
                 print(Base.WARNING, "[INTERFACE] : Starting the Power options interface.", Base.END)
@@ -550,10 +583,23 @@ while True:
                 APPPower()
 
             elif MenuItem3 == 1:
-                print(Base.WARNING, "[INTERFACE] : Starting Weather App.", Base.END)
+                print(Base.WARNING, "[INTERFACE] : Starting the Robot Info App.", Base.END)
                 VisionEngine.appStart(LanguageSet, debugStatus)
                 time.sleep(0.5)
-                APPWeather()
+                APPRobotInfo()
+            
+            elif MenuItem4 == 1:
+                print(Base.WARNING, "[INTERFACE] : Starting the Machine Info App.", Base.END)
+                VisionEngine.appStart(LanguageSet, debugStatus)
+                time.sleep(0.5)
+                APPMachineInfo()
+                
+            elif MenuItem5 == 1:
+                print(Base.WARNING, "[INTERFACE] : Starting AcoustiVisor Demo App.", Base.END)
+                VisionEngine.appStart(LanguageSet, debugStatus)
+                time.sleep(0.5)  
+                AcoustiVisor()
+            
             time.sleep(ButtonPressDelay)
 
     if screenOff == True:
