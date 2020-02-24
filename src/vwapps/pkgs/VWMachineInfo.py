@@ -14,9 +14,7 @@ import Adafruit_SSD1306
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
-from test import CobotInfo
-
-cobot = CobotInfo()
+from cobot_cloud import g_cobot_info, cred
 
 #######################################
 # Display Initialization. DO NOT ALTER!

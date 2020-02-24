@@ -110,7 +110,8 @@ def sspnd():
     time.sleep(0.3)
     print("[VISIONENGINE] : Display suspended. Press suspend button again to exit suspended state.")
 
-def disptext(s1, s2, s3, s4, x1, x2, x3, x4, y1, y2, y3, y4, debugStatus, UTFDecode): 
+def disptext(s1, s2, s3, s4, x1, x2, x3, x4, y1, y2, y3, y4, debugStatus, 
+             UTFDecode, s5=None, x5=None, y5=None, s6=None, x6=None, y6=None): 
     # s1,s2,s3,s4 are the strings to be printed. 
     # y1,y2,y3,y4 are the vertical offset distances between the strings. 
     # x1,x2,x3,x4 are the horizontal offset distances from the left-end of display. 
@@ -123,11 +124,19 @@ def disptext(s1, s2, s3, s4, x1, x2, x3, x4, y1, y2, y3, y4, debugStatus, UTFDec
         draw.text((x+x2, top+y2), s2.decode('utf-8'),  font=font, fill=255)
         draw.text((x+x3, top+y3), s3.decode('utf-8'),  font=font, fill=255)
         draw.text((x+x4, top+y4), s4.decode('utf-8'),  font=font, fill=255)
+        if s5 is not None:
+            draw.text((x+x5, top+y5), s5.decode('utf-8'),  font=font, fill=255)
+        if s6 is not None:
+            draw.text((x+x6, top+y6), s6.decode('utf-8'),  font=font, fill=255)
     else:
         draw.text((x+x1, top+y1), s1,  font=font, fill=255)
         draw.text((x+x2, top+y2), s2,  font=font, fill=255)
         draw.text((x+x3, top+y3), s3,  font=font, fill=255)
         draw.text((x+x4, top+y4), s4,  font=font, fill=255)
+        if s5 is not None:
+            draw.text((x+x5, top+y5), s5,  font=font, fill=255)
+        if s6 is not None:
+            draw.text((x+x6, top+y6), s6,  font=font, fill=255)
 
     if debugStatus == True:
         disp.image(image)

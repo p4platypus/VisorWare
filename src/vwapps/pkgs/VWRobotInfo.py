@@ -14,9 +14,8 @@ import Adafruit_SSD1306
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
-from test import CobotInfo
+from cobot_cloud import g_cobot_info, cred
 
-cobot = CobotInfo()
 
 #######################################
 # Display Initialization. DO NOT ALTER!
@@ -56,7 +55,7 @@ def robotStatusDecode(robotStatus):
     elif robotStatus == 1:
         return("busy")
     elif robotStatus == 2:
-        return("stopped")
+        return("stop")
     else:
         return("unknown")
 
@@ -72,11 +71,11 @@ def robotInfo(debugStatus):
     HumidDisp = 0
     while GPIO.input(homeb) == True:
         font = ImageFont.load_default()
-        robotA = cobot.read_robot_status("A")
-        robotB = cobot.read_robot_status("B")
-        robotC = cobot.read_robot_status("C")
-        robotA_status = "Robot A: " + robotInfoDisplay(robotA)
-        robotB_status = "Robot B: " + robotInfoDisplay(robotB)
-        robotC_status = "Robot C: " + robotInfoDisplay(robotC)
+        robotA = g_cobot_info.read_robot_status("A")
+        robotB = g_cobot_info.read_robot_status("B")
+        robotC = g_cobot_info.read_robot_status("C")
+        robotA_status = "A: " + robotInfoDisplay(robotA)
+        robotB_status = "B: " + robotInfoDisplay(robotB)
+        robotC_status = "C: " + robotInfoDisplay(robotC)
 
         VisionEngine.disptext(robotA_status, robotB_status, robotC_status, " ", 0, 0, 0, 0, 0, 12, 24, 36, debugStatus, '0')
