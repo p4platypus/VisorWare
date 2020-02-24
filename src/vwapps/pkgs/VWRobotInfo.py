@@ -60,17 +60,23 @@ def robotStatusDecode(robotStatus):
     else:
         return("unknown")
 
+def robotInfoDisplay(robot):
+    if robot[1] == 0:
+        return(robotStatusDecode(robot[1]))
+    else:
+        return(robotStatusDecode(robot[1]) + ", " + robot[0] + ", " + str(robot[2]) + " mins")
+
 def robotInfo(debugStatus):
     print("Starting live robot information stream...")
     TempDisp = 1
     HumidDisp = 0
     while GPIO.input(homeb) == True:
         font = ImageFont.load_default()
-        #robotA = 
-        #robotB = 
-        #robotC = 
-        robot1_status = "Robot A: " + robotStatusDecode(robot1) + ", " + robotCoilSizeDecode(robot1)
-        robot2_status = "Robot B: " + robotStatusDecode(robot2) + ", " + robotCoilSizeDecode(robot2)
-        robot3_status = "Robot C: " + robotStatusDecode(robot3) + ", " + robotCoilSizeDecode(robot3)
+        robotA = cobot.read_robot_status("A")
+        robotB = cobot.read_robot_status("B")
+        robotC = cobot.read_robot_status("C")
+        robotA_status = "Robot A: " + robotInfoDisplay(robotA)
+        robotB_status = "Robot B: " + robotInfoDisplay(robotB)
+        robotC_status = "Robot C: " + robotInfoDisplay(robotC)
 
-        VisionEngine.disptext(robot1_status, robot2_status, robot3_status, " ", 0, 0, 0, 0, 0, 12, 24, 36, debugStatus, '0')
+        VisionEngine.disptext(robotA_status, robotB_status, robotC_status, " ", 0, 0, 0, 0, 0, 12, 24, 36, debugStatus, '0')

@@ -14,6 +14,9 @@ import Adafruit_SSD1306
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
+from test import CobotInfo
+
+cobot = CobotInfo()
 
 #######################################
 # Display Initialization. DO NOT ALTER!
@@ -55,7 +58,7 @@ def machineStatusDecode(machineStatus):
     else:
         return("unknown")
 
-def machineCoilSizeDecode(machineCoilSize):
+def machineInfoDisplay(machineBig, machineMiddle, machineSmall):
     if machineCoilSize == 1:
         return("big")
     elif machineCoilSize == 2:
@@ -74,8 +77,8 @@ def machineInfo(debugStatus):
         #machine1 = 
         #machine2 = 
         #machine3 = 
-        machine1_status = "Machine 1: " + machineStatusDecode(machine1) + ", " + machineCoilSizeDecode(machine1)
-        machine2_status = "Machine 2: " + machineStatusDecode(machine2) + ", " + machineCoilSizeDecode(machine3)
-        machine3_status = "Machine 3: " + machineStatusDecode(machine3) + ", " + machineCoilSizeDecode(machine3)
+        machine1_status = "Machine 1: " 
+        machine2_status = "Machine 2: " 
+        machine3_status = "Machine 3: " 
 
         VisionEngine.disptext(machine1_status, machine2_status, machine3_status, " ", 0, 0, 0, 0, 0, 12, 24, 36, debugStatus, '0')
