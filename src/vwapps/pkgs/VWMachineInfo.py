@@ -48,23 +48,25 @@ GPIO.setup(screenb, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 #
 ##################################################
 
-def machineStatusDecode(machineStatus):
-    if machineStatus == 1:
-        return("busy")
-    elif machineStatus == 2:
-        return("free")
-    else:
-        return("unknown")
-
 def machineInfoDisplay(machineBig, machineMiddle, machineSmall):
-    if machineCoilSize == 1:
-        return("big")
-    elif machineCoilSize == 2:
-        return("med")
-    elif machineCoilSize == 3:
-        return("small")
+    install = [machineBig[1], machineMiddle[1], machineSmall[1]]
+    minute = [machineBig[0], machineMiddle[0], machineSmall[0]]
+    size = ["big", "middle", "small"]
+    info = ""
+    if machineBig[1] and machineMiddle[1] and machineSmall[1]:
+        if machineBig[0] != 0 and machineMiddle[0] != 0 and machineSmall[0] != 0:
+            info = info + "Wait for " + size[minute.index(min(minute))] + ", " + str(min(minute)) + " mins"
+        else:
+            info = info + "Replace "
+            for i in range(3):
+                if minute[i] == 0:
+                    info = info + size[i] + ", "
     else:
-        return("none")
+        info = info + "Install "
+        for i in range(3):
+            if install[i] == False:
+                info = info + size[i] + ", "
+    return info
 
 def machineInfo(debugStatus):
     print("Starting live machine information stream...")
@@ -72,11 +74,17 @@ def machineInfo(debugStatus):
     HumidDisp = 0
     while GPIO.input(homeb) == True:
         font = ImageFont.load_default()
-        #machine1 = 
-        #machine2 = 
-        #machine3 = 
-        machine1_status = "Machine 1: " 
-        machine2_status = "Machine 2: " 
-        machine3_status = "Machine 3: " 
+        machineABig = g_cobot_info.read_machine_status("A", "big")
+        machineAMiddle = g_cobot_info.read_machine_status("A", "middle")
+        machineASmall = g_cobot_info.read_machine_status("A", "small")
+        machineBBig = g_cobot_info.read_machine_status("B", "big")
+        machineBMiddle = g_cobot_info.read_machine_status("B", "middle")
+        machineBSmall = g_cobot_info.read_machine_status("B", "small")
+        machineCBig = g_cobot_info.read_machine_status("C", "big")
+        machineCMiddle = g_cobot_info.read_machine_status("C", "middle")
+        machineCSmall = g_cobot_info.read_machine_status("C", "small")
+        machineA_status = "A: " + machineInfoDisplay(machineABig, machineAMiddle, machineASmall)
+        machineB_status = "B: " + machineInfoDisplay(machineBBig, machineBMiddle, machineBSmall)
+        machineC_status = "C: " + machineInfoDisplay(machineCBig, machineCMiddle, machineCSmall)
 
-        VisionEngine.disptext(machine1_status, machine2_status, machine3_status, " ", 0, 0, 0, 0, 0, 12, 24, 36, debugStatus, '0')
+        VisionEngine.disptext(machineA_status, machineB_status, machineC_status, " ", 0, 0, 0, 0, 0, 12, 24, 36, debugStatus, '0')

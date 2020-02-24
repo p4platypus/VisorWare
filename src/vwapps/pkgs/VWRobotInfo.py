@@ -61,9 +61,9 @@ def robotStatusDecode(robotStatus):
 
 def robotInfoDisplay(robot):
     if robot[1] == 0:
-        return(robotStatusDecode(robot[1]))
+        return robotStatusDecode(robot[1])
     else:
-        return(robotStatusDecode(robot[1]) + ", " + robot[0] + ", " + str(robot[2]) + " mins")
+        return robotStatusDecode(robot[1]) + ", " + robot[0] + ", " + str(robot[2]) + " mins"
 
 def robotInfo(debugStatus):
     print("Starting live robot information stream...")
