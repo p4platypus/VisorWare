@@ -14,6 +14,9 @@ import Adafruit_SSD1306
 from PIL import Image
 from PIL import ImageFont
 from PIL import ImageDraw
+from test import CobotInfo
+
+cobot = CobotInfo()
 
 #######################################
 # Display Initialization. DO NOT ALTER!
@@ -48,22 +51,14 @@ GPIO.setup(screenb, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 ##################################################
 
 def robotStatusDecode(robotStatus):
-    if robotStatus == 1:
+    if robotStatus == 0:
+        return("free")
+    elif robotStatus == 1:
         return("busy")
     elif robotStatus == 2:
-        return("free")
+        return("stopped")
     else:
         return("unknown")
-
-def robotCoilSizeDecode(robotCoilSize):
-    if robotCoilSize == 1:
-        return("big")
-    elif robotCoilSize == 2:
-        return("med")
-    elif robotCoilSize == 3:
-        return("small")
-    else:
-        return("none")
 
 def robotInfo(debugStatus):
     print("Starting live robot information stream...")
@@ -71,11 +66,11 @@ def robotInfo(debugStatus):
     HumidDisp = 0
     while GPIO.input(homeb) == True:
         font = ImageFont.load_default()
-        #robot1 = 
-        #robot2 = 
-        #robot3 = 
-        robot1_status = "Robot 1: " + robotStatusDecode(robot1) + ", " + robotCoilSizeDecode(robot1)
-        robot2_status = "Robot 2: " + robotStatusDecode(robot2) + ", " + robotCoilSizeDecode(robot2)
-        robot3_status = "Robot 3: " + robotStatusDecode(robot3) + ", " + robotCoilSizeDecode(robot3)
+        #robotA = 
+        #robotB = 
+        #robotC = 
+        robot1_status = "Robot A: " + robotStatusDecode(robot1) + ", " + robotCoilSizeDecode(robot1)
+        robot2_status = "Robot B: " + robotStatusDecode(robot2) + ", " + robotCoilSizeDecode(robot2)
+        robot3_status = "Robot C: " + robotStatusDecode(robot3) + ", " + robotCoilSizeDecode(robot3)
 
         VisionEngine.disptext(robot1_status, robot2_status, robot3_status, " ", 0, 0, 0, 0, 0, 12, 24, 36, debugStatus, '0')
